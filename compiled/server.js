@@ -13,7 +13,7 @@ let parsedFile = new ExcelParser_1.ExcelParser(path);
 foodBot.botInstance.on('message', (msg) => {
     const chatId = msg.chat.id;
     let weeks = ['/monday', '/tuesday', '/wednesday', '/thursday', '/friday'];
-    if (weeks.indexOf(msg.text.toLowerCase()) >= 0) {
+    if (weeks.indexOf(msg.text) >= 0) {
         //console.log(parsedFile.getMenuByWeekDay(msg.text));
         let message = parsedFile.getMenuByWeekDay(msg.text.replace('/', ''));
         message = message.join('\n');
