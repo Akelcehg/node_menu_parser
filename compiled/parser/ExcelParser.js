@@ -43,6 +43,16 @@ class ExcelParser {
         }
         return parsedObjects;
     }
+    getMenuByWeekDay(weekDayName) {
+        let rangeObject = this.getRangeToObject(weeksObject[weekDayName]);
+        let foodArray = [];
+        for (let index in rangeObject) {
+            if (rangeObject[index] && rangeObject[index]['h']) {
+                foodArray.push(rangeObject[index]['h']);
+            }
+        }
+        return foodArray;
+    }
     converRangeObject(range) {
         range.s.c = this.getRowLetterNumber(range.s.c);
         range.e.c = this.getRowLetterNumber(range.e.c);

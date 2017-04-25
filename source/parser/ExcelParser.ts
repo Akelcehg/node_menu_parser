@@ -61,7 +61,7 @@ class ExcelParser {
 
             let foodArray = [];
             for (let index in object) {
-                if (object[index] && object[index]['h']) {             
+                if (object[index] && object[index]['h']) {
                     foodArray.push(object[index]['h']);
                 }
             }
@@ -69,6 +69,18 @@ class ExcelParser {
         }
 
         return parsedObjects;
+    }
+
+    public getMenuByWeekDay(weekDayName: string) {
+        let rangeObject = this.getRangeToObject(weeksObject[weekDayName])
+        let foodArray = [];
+            for (let index in rangeObject) {
+                if (rangeObject[index] && rangeObject[index]['h']) {
+                    foodArray.push(rangeObject[index]['h']);
+                }
+            }
+
+        return foodArray;
     }
 
     private converRangeObject(range: IRange): IRange {
