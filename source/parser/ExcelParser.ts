@@ -1,15 +1,7 @@
 import * as XLSX from 'xlsx'
 import * as weeksObject from '../../config/daysWeekRange.json'
 
-/*
-interface IRangeChildren {
-     c: Number, 
-     r: Number 
-}*/
-
 interface IRange {
-    //s: { c: 0, r: 25 }, e: { c: '3', r: 30 } 
-
     s: {
         c: any,
         r: number
@@ -18,7 +10,6 @@ interface IRange {
         c: any,
         r: number
     },
-    //e : IRangeChildren,
 }
 
 class ExcelParser {
@@ -26,7 +17,6 @@ class ExcelParser {
     private filePath: string;
     private fileReadReady;
     private workbook;
-    //private rengedData : Array<any>;
 
     constructor(filePath: string) {
         this.filePath = filePath;
@@ -36,11 +26,7 @@ class ExcelParser {
     public getFilePath(): string {
         return this.filePath;
     }
-    /*
-        public getRengedData() {
-            return this.rengedData;
-        }
-    */
+
     public readFile() {
         this.workbook = XLSX.readFile(this.filePath);
         this.fileReadReady = this.workbook.Sheets["Меню для рассылки"];

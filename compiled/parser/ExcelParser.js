@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const XLSX = require("xlsx");
 const weeksObject = require("../../config/daysWeekRange.json");
 class ExcelParser {
-    //private rengedData : Array<any>;
     constructor(filePath) {
         this.filePath = filePath;
         this.readFile();
@@ -11,11 +10,6 @@ class ExcelParser {
     getFilePath() {
         return this.filePath;
     }
-    /*
-        public getRengedData() {
-            return this.rengedData;
-        }
-    */
     readFile() {
         this.workbook = XLSX.readFile(this.filePath);
         this.fileReadReady = this.workbook.Sheets["Меню для рассылки"];
