@@ -10,8 +10,11 @@ app.use('/api', api_routes_1.ApiRoutes);
 let foodBot = new FoodBot_1.FoodBot();
 let path = "./data/food.xlsx";
 let parsedFile = new ExcelParser_1.ExcelParser(path);
+//foodBot.botInstance.sendMessage(32317725,"dsadasdsadas");
+//slava chat ID 42346292
 foodBot.botInstance.on('message', (msg) => {
     const chatId = msg.chat.id;
+    console.log(chatId);
     let weeks = ['/monday', '/tuesday', '/wednesday', '/thursday', '/friday'];
     if (weeks.indexOf(msg.text) >= 0) {
         //console.log(parsedFile.getMenuByWeekDay(msg.text));
