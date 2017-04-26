@@ -17,31 +17,46 @@ foodBot.botInstance.onText(/\/menu/, function onLoveText(msg) {
     const opts = {
         reply_to_message_id: msg.message_id,
         reply_markup: JSON.stringify({
-            keyboard: [
-                [{
+            inline_keyboard: [
+                [
+                    {
                         text: 'Понедельник',
                         callback_data: '/monday'
-                    }, '/tuesday'],
-                ['/wednesday', '/thursday'],
-                ['/friday']
+                    }
+                ],
+                [{
+                        text: 'Вторник',
+                        callback_data: '/tuesday'
+                    }], [{
+                        text: 'Среда',
+                        callback_data: '/wednesday'
+                    }], [{
+                        text: 'Четверг',
+                        callback_data: '/thursday'
+                    }], [{
+                        text: 'Пятница',
+                        callback_data: '/friday'
+                    }
+                ]
             ]
         })
     };
     foodBot.botInstance.sendMessage(msg.chat.id, 'На какой день еду показать?', opts);
     //foodBot.botInstance.sendMessage(msg.from.id, 'Original Text', opts);
 });
+/*
 foodBot.botInstance.on('message', (msg) => {
-    const chatId = msg.chat.id;
-    let weeks = ['/monday', '/tuesday', '/wednesday', '/thursday', '/friday'];
-    if (weeks.indexOf(msg.text) >= 0) {
-        let message = parsedFile.getMenuByWeekDay(msg.text.replace('/', ''));
-        message = message.join('\n');
-        message = message.replace(/&quot;/g, '"');
-        foodBot.botInstance.sendMessage(chatId, message);
-    }
-    else
-        foodBot.botInstance.sendMessage(chatId, "тупо пересылаю что мне шлют '" + msg.text + "'");
-});
+  const chatId = msg.chat.id;
+  
+  let weeks = ['/monday', '/tuesday', '/wednesday', '/thursday', '/friday'];
+  if (weeks.indexOf(msg.text) >= 0) {
+    let message: any = parsedFile.getMenuByWeekDay(msg.text.replace('/', ''));
+    message = message.join('\n');
+    message = message.replace(/&quot;/g, '"');
+    foodBot.botInstance.sendMessage(chatId, message);
+  } else foodBot.botInstance.sendMessage(chatId, "тупо пересылаю что мне шлют '" + msg.text + "'");
+
+});*/
 foodBot.botInstance.on('callback_query', function onCallbackQuery(callbackQuery) {
     const action = callbackQuery.data;
     const msg = callbackQuery.message;
@@ -53,7 +68,7 @@ foodBot.botInstance.on('callback_query', function onCallbackQuery(callbackQuery)
     /*if (action === 'edit') {
       text = 'Edited Text';
     }*/
-    console.log(action);
+    console.log('12312321' + action);
     let weeks = ['/monday', '/tuesday', '/wednesday', '/thursday', '/friday'];
     if (weeks.indexOf(action) >= 0) {
         let message = parsedFile.getMenuByWeekDay(action.replace('/', ''));
@@ -63,6 +78,12 @@ foodBot.botInstance.on('callback_query', function onCallbackQuery(callbackQuery)
     }
     // else foodBot.botInstance.sendMessage(chatId, "тупо пересылаю что мне шлют '" + msg.text + "'");
     //foodBot.botInstance.editMessageText(text, opts);
+});
+foodBot.botInstance.on('polling_error', (error) => {
+    console.log(error.code);
+});
+foodBot.botInstance.on('webhook_error', (error) => {
+    console.log(error.code);
 });
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}/`);

@@ -21,13 +21,27 @@ foodBot.botInstance.onText(/\/menu/, function onLoveText(msg) {
   const opts = {
     reply_to_message_id: msg.message_id,
     reply_markup: JSON.stringify({
-      keyboard: [
-        [{
+      inline_keyboard: [
+        [
+          {
             text: 'Понедельник',
             callback_data: '/monday'
-          },'/tuesday'], 
-        ['/wednesday','/thursday'], 
-        ['/friday']
+          }
+        ],
+        [{
+          text: 'Вторник',
+          callback_data: '/tuesday'
+        }], [{
+          text: 'Среда',
+          callback_data: '/wednesday'
+        }], [{
+          text: 'Четверг',
+          callback_data: '/thursday'
+        }], [{
+          text: 'Пятница',
+          callback_data: '/friday'
+        }
+        ]
       ]
     })
   };
@@ -35,7 +49,7 @@ foodBot.botInstance.onText(/\/menu/, function onLoveText(msg) {
   //foodBot.botInstance.sendMessage(msg.from.id, 'Original Text', opts);
 });
 
-
+/*
 foodBot.botInstance.on('message', (msg) => {
   const chatId = msg.chat.id;
   
@@ -47,7 +61,7 @@ foodBot.botInstance.on('message', (msg) => {
     foodBot.botInstance.sendMessage(chatId, message);
   } else foodBot.botInstance.sendMessage(chatId, "тупо пересылаю что мне шлют '" + msg.text + "'");
 
-});
+});*/
 
 foodBot.botInstance.on('callback_query', function onCallbackQuery(callbackQuery) {
   const action = callbackQuery.data;
@@ -61,7 +75,7 @@ foodBot.botInstance.on('callback_query', function onCallbackQuery(callbackQuery)
   /*if (action === 'edit') {
     text = 'Edited Text';
   }*/
-  console.log (action);
+  console.log('12312321' + action);
 
   let weeks = ['/monday', '/tuesday', '/wednesday', '/thursday', '/friday'];
   if (weeks.indexOf(action) >= 0) {
@@ -76,6 +90,13 @@ foodBot.botInstance.on('callback_query', function onCallbackQuery(callbackQuery)
 });
 
 
+foodBot.botInstance.on('polling_error', (error) => {
+  console.log(error.code);
+});
+
+foodBot.botInstance.on('webhook_error', (error) => {
+  console.log(error.code);
+});
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}/`);
