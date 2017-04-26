@@ -69,6 +69,9 @@ foodBot.botInstance.on('callback_query', function onCallbackQuery(callbackQuery)
     let weeks = ['/monday', '/tuesday', '/wednesday', '/thursday', '/friday'];
     if (weeks.indexOf(action) >= 0) {
         let message = parsedFile.getMenuByWeekDay(action.replace('/', ''));
+        for (let i = 0; i < message.length; i++) {
+            message[i] = i + 1 + ') ' + message[i];
+        }
         message = message.join('\n');
         message = message.replace(/&quot;/g, '"');
         foodBot.botInstance.sendMessage(opts.chat_id, message);
