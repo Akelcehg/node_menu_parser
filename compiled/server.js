@@ -18,12 +18,10 @@ foodBot.botInstance.onText(/\/menu/, function onLoveText(msg) {
         reply_to_message_id: msg.message_id,
         reply_markup: JSON.stringify({
             inline_keyboard: [
-                [
-                    {
+                [{
                         text: 'Понедельник',
                         callback_data: '/monday'
-                    }
-                ],
+                    }],
                 [{
                         text: 'Вторник',
                         callback_data: '/tuesday'
@@ -36,8 +34,7 @@ foodBot.botInstance.onText(/\/menu/, function onLoveText(msg) {
                     }], [{
                         text: 'Пятница',
                         callback_data: '/friday'
-                    }
-                ]
+                    }]
             ]
         })
     };
