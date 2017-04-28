@@ -82,8 +82,8 @@ foodBot.botInstance.on('callback_query', function onCallbackQuery(callbackQuery)
 
     message = message.join('\n');
     message = message.replace(/&quot;/g, '"');
-    //foodBot.botInstance.sendMessage(opts.chat_id, message);
-    return foodBot.botInstance.answerCallbackQuery(callbackQuery.id, 'Ok, here ya go!');
+    foodBot.botInstance.sendMessage(opts.chat_id, message);
+    //return foodBot.botInstance.answerCallbackQuery(callbackQuery.id, 'Ok, here ya go!');
   }
   return true;
   // else foodBot.botInstance.sendMessage(chatId, "тупо пересылаю что мне шлют '" + msg.text + "'");
