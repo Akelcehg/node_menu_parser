@@ -57,9 +57,6 @@ foodBot.botInstance.on('message', (msg) => {
 foodBot.botInstance.on('callback_query', function onCallbackQuery(callbackQuery) {
     const action = callbackQuery.data;
     const msg = callbackQuery.message;
-    console.log("3123213213");
-    //console.log (callbackQuery);
-    console.log(action);
     const opts = {
         chat_id: msg.chat.id,
         message_id: msg.message_id,
