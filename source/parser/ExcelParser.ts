@@ -1,5 +1,6 @@
 import * as XLSX from 'xlsx'
-import * as weeksObject from '../../config/daysWeekRange.json'
+import * as fs from 'fs'
+//import * as weeksObject from '../../config/daysWeekRange.json'
 
 interface IRange {
     s: {
@@ -29,7 +30,7 @@ class ExcelParser {
 
     public readFile() {
         this.workbook = XLSX.readFile(this.filePath);
-        this.fileReadReady = this.workbook.Sheets["Меню для рассылки"];
+        return this.fileReadReady = this.workbook.Sheets["Меню для рассылки"];
     }
 
     public selectRangeFromSheet(randgeObject: IRange) {
@@ -48,12 +49,20 @@ class ExcelParser {
 
 
     public getRangeToObject(range: IRange): Object {
+
+        /*console.log ('--------------------------');
+        console.log (range);
+        console.log ('--------------------------');
+        console.log (this.converRangeObject(range));
+        console.log ('--------------------------');*/
         return this.selectRangeFromSheet(this.converRangeObject(range));
     }
 
     public getAllWeeksRangeToObject() {
 
         let parsedObjects = {};
+        
+        let weeksObject = JSON.parse(fs.readFileSync(__dirname + '/../../config/daysWeekRange.json', 'utf8'));
 
         for (let key in weeksObject) {
 
@@ -72,26 +81,29 @@ class ExcelParser {
     }
 
     public getMenuByWeekDay(weekDayName: string) {
+        let weeksObject = JSON.parse(fs.readFileSync(__dirname + '/../../config/daysWeekRange.json', 'utf8'));
         let rangeObject = this.getRangeToObject(weeksObject[weekDayName])
         let foodArray = [];
-            for (let index in rangeObject) {
-                if (rangeObject[index] && rangeObject[index]['h']) {
-                    foodArray.push(rangeObject[index]['h']);
-                }
+        for (let index in rangeObject) {
+            if (rangeObject[index] && rangeObject[index]['h']) {
+                foodArray.push(rangeObject[index]['h']);
             }
+        }
 
         return foodArray;
     }
 
     private converRangeObject(range: IRange): IRange {
 
-        range.s.c = this.getRowLetterNumber(range.s.c);
-        range.e.c = this.getRowLetterNumber(range.e.c);
+        let newRange = range;
 
-        range.s.r -= 1;
-        range.e.r -= 1;
+        newRange.s.c = this.getRowLetterNumber(newRange.s.c);
+        newRange.e.c = this.getRowLetterNumber(newRange.e.c);
 
-        return range;
+        newRange.s.r -= 1;
+        newRange.e.r -= 1;
+
+        return newRange;
     }
 
     private getRowLetterNumber(letter: string) {

@@ -9,7 +9,7 @@ const port = 3000;
 app.use('/api', api_routes_1.ApiRoutes);
 let foodBot = new FoodBot_1.FoodBot();
 let path = "./data/food.xlsx";
-let parsedFile = new ExcelParser_1.ExcelParser(path);
+//let parsedFile = new ExcelParser(path);
 //foodBot.botInstance.sendMessage(32317725,"dsadasdsadas");
 //slava chat ID 42346292
 foodBot.botInstance.onText(/\/menu/, function onLoveText(msg) {
@@ -57,16 +57,16 @@ foodBot.botInstance.on('message', (msg) => {
 foodBot.botInstance.on('callback_query', function onCallbackQuery(callbackQuery) {
     const action = callbackQuery.data;
     const msg = callbackQuery.message;
+    console.log("3123213213");
+    //console.log (callbackQuery);
+    console.log(action);
     const opts = {
         chat_id: msg.chat.id,
         message_id: msg.message_id,
     };
     let text;
-    /*if (action === 'edit') {
-      text = 'Edited Text';
-    }*/
-    console.log('12312321' + action);
     let weeks = ['/monday', '/tuesday', '/wednesday', '/thursday', '/friday'];
+    let parsedFile = new ExcelParser_1.ExcelParser(path);
     if (weeks.indexOf(action) >= 0) {
         let message = parsedFile.getMenuByWeekDay(action.replace('/', ''));
         for (let i = 0; i < message.length; i++) {
@@ -74,17 +74,21 @@ foodBot.botInstance.on('callback_query', function onCallbackQuery(callbackQuery)
         }
         message = message.join('\n');
         message = message.replace(/&quot;/g, '"');
-        foodBot.botInstance.sendMessage(opts.chat_id, message);
+        //foodBot.botInstance.sendMessage(opts.chat_id, message);
+        return foodBot.botInstance.answerCallbackQuery(callbackQuery.id, 'Ok, here ya go!');
     }
+    return true;
     // else foodBot.botInstance.sendMessage(chatId, "тупо пересылаю что мне шлют '" + msg.text + "'");
     //foodBot.botInstance.editMessageText(text, opts);
 });
+/*
 foodBot.botInstance.on('polling_error', (error) => {
-    console.log(error.code);
+  console.log(error.code);
 });
+
 foodBot.botInstance.on('webhook_error', (error) => {
-    console.log(error.code);
-});
+  console.log(error.code);
+});*/
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}/`);
 });
